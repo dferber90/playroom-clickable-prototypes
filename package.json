@@ -1,6 +1,6 @@
 {
   "name": "playroom-clickable-prototypes",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "Clickable Prototypes for Playroom",
   "main": "dist/playroom-clickable-prototypes.cjs.js",
   "module": "dist/playroom-clickable-prototypes.esm.js",
@@ -8,7 +8,6 @@
   "author": "Dominik Ferber <dominik.ferber+npm@gmail.com> (http://dferber.de/)",
   "license": "MIT",
   "scripts": {
-    "postinstall": "preconstruct dev",
     "build": "preconstruct build",
     "release": "yarn build && npm publish"
   },
@@ -16,13 +15,12 @@
     "@babel/core": "7.12.9",
     "@babel/preset-env": "7.12.7",
     "@babel/preset-react": "7.12.7",
+    "@babel/preset-typescript": "7.12.7",
     "@preconstruct/cli": "2.0.1",
+    "react": "17.0.1",
     "typescript": "4.1.2"
   },
   "peerDependencies": {
     "react": ">= 16.8"
-  },
-  "dependencies": {
-    "@babel/preset-typescript": "7.12.7"
   }
 }

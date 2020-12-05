@@ -1,8 +1,6 @@
 import * as React from "react";
 
 /*
-  TODO publish this with preconstruct
-
   Usage
 
   <Prototype active="start">
