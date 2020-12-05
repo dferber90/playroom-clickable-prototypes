@@ -2,6 +2,8 @@ Create clickable prototypes in [Playroom](https://github.com/seek-oss/playroom).
 
 This package lets you create clickable prototypes in your Playroom. It's intended for prototyping purposes.
 
+![Demo](https://i.imgur.com/XVGbZXB.gif)
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [Components](#components)
@@ -24,7 +26,7 @@ yarn add playroom-clickable-prototypes
 Then open your Playroom components file and add
 
 ```js
-export * from "playroom-clickable-prototypes";
+export { Stage, Trigger, Frame } from "playroom-clickable-prototypes";
 ```
 
 
@@ -65,14 +67,20 @@ After transitioning away from the initial frame, you can press the Escape key th
 
 ### `Stage`
 
+The general stage. Wrap this component around your frames.
+
 - `initial` (`string`, *required*): The id of the frame to be shown initially
 
 ### `Frame`
+
+The individual frames of your prototype.
 
 - `id` (`string`, *required*): The id of this frame
 
 
 ### `Trigger`
+
+The triggers which transition to different frames when clicked. Wrap this around your buttons or links.
 
 - `target` (`string`, *required*): The id of the frame this trigger links to
 
