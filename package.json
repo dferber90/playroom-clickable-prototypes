@@ -1,6 +1,6 @@
 {
   "name": "playroom-clickable-prototypes",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.1-alpha.4",
   "description": "Clickable Prototypes for Playroom",
   "main": "dist/playroom-clickable-prototypes.cjs.js",
   "module": "dist/playroom-clickable-prototypes.esm.js",

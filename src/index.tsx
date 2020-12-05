@@ -3,13 +3,13 @@ import * as React from "react";
 /*
   Usage
 
-  <Prototype active="start">
+  <Stage initial="start">
     <Frame id="start">
       <Trigger target="start" action="click, hovering, pressing, mouseEnter, mouseLeave">
 
       </Trigger>
     </Frame>
-  </Prototype>
+  </Stage>
 */
 
 // -----------------------------------------------------------------------------
@@ -64,14 +64,14 @@ const useEscapeTwice = (onTwice) => {
 // Context
 // -----------------------------------------------------------------------------
 
-type PrototypeContextType = {
+type StageContextType = {
   frame: string;
   setFrame: (frame: string) => void;
   highlighted: boolean;
   setHighlighted: (highlighted: boolean) => void;
 };
 
-const PrototypeContext = React.createContext<PrototypeContextType>({
+const StageContext = React.createContext<StageContextType>({
   frame: "",
   setFrame: () => {},
   highlighted: false,
@@ -79,31 +79,30 @@ const PrototypeContext = React.createContext<PrototypeContextType>({
 });
 
 // -----------------------------------------------------------------------------
-// Prototype
+// Stage
 // -----------------------------------------------------------------------------
 
-interface PrototypeProps {
-  active?: string;
+interface StageProps {
+  initial?: string;
 }
 
-export const Prototype: React.FC<PrototypeProps> = (props) => {
-  const initiallyActiveFrame = props.active ? props.active : "";
+export const Stage: React.FC<StageProps> = (props) => {
+  const initiallyActiveFrame = props.initial ? props.initial : "";
   const [frame, setFrame] = React.useState<string>(initiallyActiveFrame);
   const [highlighted, setHighlighted] = React.useState<boolean>(false);
-  const prevActiveProp = usePrevious(initiallyActiveFrame);
+  const prevInitialProp = usePrevious(initiallyActiveFrame);
 
-  const prototypeContext = React.useMemo(
+  const stageContext = React.useMemo(
     () => ({ frame, setFrame, highlighted, setHighlighted }),
     [frame, setFrame, highlighted, setHighlighted]
   );
 
-  // update active frame if initial value changes
+  // update frame if initial value changes
   React.useEffect(() => {
-    if (props.active !== prevActiveProp) {
-      console.log("active check resets");
-      setFrame(props.active);
+    if (props.initial !== prevInitialProp) {
+      setFrame(props.initial);
     }
-  }, [props.active, prevActiveProp]);
+  }, [props.initial, prevInitialProp]);
 
   // allow reset by pressing escape thrice
   const handleEscapeTwice = React.useCallback(() => {
@@ -143,13 +142,13 @@ export const Prototype: React.FC<PrototypeProps> = (props) => {
   }, [highlighted, setHighlighted]);
 
   return (
-    <PrototypeContext.Provider value={prototypeContext}>
+    <StageContext.Provider value={stageContext}>
       {props.children}
-    </PrototypeContext.Provider>
+    </StageContext.Provider>
   );
 };
 
-Prototype.defaultProps = { active: "" };
+Stage.defaultProps = { initial: "" };
 
 // -----------------------------------------------------------------------------
 // Frame
@@ -161,8 +160,8 @@ interface FrameProps {
 }
 
 export const Frame: React.FC<FrameProps> = (props) => {
-  const prototypeContext = React.useContext(PrototypeContext);
-  return prototypeContext.frame === props.id ? props.children : null;
+  const stageContext = React.useContext(StageContext);
+  return stageContext.frame === props.id ? props.children : null;
 };
 
 Frame.defaultProps = { id: "" };
@@ -176,13 +175,13 @@ interface TriggerProps {
 }
 
 export const Trigger: React.FC<TriggerProps> = (props) => {
-  const prototypeContext = React.useContext(PrototypeContext);
+  const stageContext = React.useContext(StageContext);
   return (
     <div
-      onClick={() => prototypeContext.setFrame(props.target)}
+      onClick={() => stageContext.setFrame(props.target)}
       style={{
         display: "inline-block",
-        outline: prototypeContext.highlighted ? "2px solid #AF8638" : "",
+        outline: stageContext.highlighted ? "2px solid #AF8638" : "",
       }}
     >
       {props.children}
